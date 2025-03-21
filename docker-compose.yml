@@ -1,0 +1,14 @@
+services:
+  mongodb:
+    image: mongo:4.4.23-focal  # Explicitly use Ubuntu 20.04 base image
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - /srv/tmp-data/mongodb/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "xxx"
+    command: ["--auth"]
+    user: "0:0"  # Run as root
