@@ -1,0 +1,18 @@
+[Unit]
+Description=MongoDB (Docker Compose)
+Requires=docker.service
+After=docker.service network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/srv/tmp-data/mongodb
+ExecStart=/bin/docker compose up -d
+ExecStop=/bin/docker compose down
+ExecReload=/bin/docker compose restart
+TimeoutStartSec=0    # Disable start timeout, in case pulling the image is slow
+# No explicit Restart= (oneshot services won't restart on their own)
+# Restart should be set up within Docker image
+
+[Install]
+WantedBy=multi-user.target
